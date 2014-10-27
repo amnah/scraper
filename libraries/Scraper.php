@@ -116,5 +116,7 @@ class Scraper extends Component
         foreach ($insertChunks as $insertChunk) {
             $connection->createCommand()->batchInsert(Payment::tableName(), $insertColumns, $insertChunk)->execute();
         }
+
+        return count($insertRows);
     }
 }

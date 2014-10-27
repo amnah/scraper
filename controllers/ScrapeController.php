@@ -50,13 +50,15 @@ class ScrapeController extends \yii\web\Controller
         // import next set of rows
         $scrapeLimit = Config::get("num_scrape_limit");
         $lastImportedId = Config::get("last_imported_id");
-        Scraper::import($scrapeLimit, $lastImportedId);
+        $numImported = Scraper::import($scrapeLimit, $lastImportedId);
 
         // update last imported id
         $command = Yii::$app->db->createCommand('SELECT MAX(id) FROM tbl_payment');
         $maxId = $command->queryScalar();
         Config::set("last_imported_id", $maxId);
 
+        Yii::$app->session->setFlash("Import-success", "Imported $numImported rows, up to id $maxId");
+        return $this->redirect(['/payment']);
         // https://openpaymentsdata.cms.gov/resource/hrpy-hqv8.json?$$exclude_system_fields=false&$limit=10000&$where=:updated_at>'2014-10-10'
     }
 

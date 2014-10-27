@@ -17,10 +17,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
+    <?php if ($flash = Yii::$app->session->getFlash("Import-success")): ?>
+
+        <div class="alert alert-success">
+            <p><?= $flash ?></p>
+        </div>
+
+    <?php endif; ?>
+
     <p>
-        <?= Html::a(Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Payment',
-]), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Import next rows (4000)'), ['/scrape/import-next'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -45,8 +51,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'general_transaction_id',
-            'program_year',
-            'payment_publication_date',
+            //'program_year',
+            //'payment_publication_date',
             [
                 'attribute' => 'submitting_applicable_manufacturer_or_applicable_gpo_name',
                 'class' => 'kartik\grid\DataColumn',
@@ -65,11 +71,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             // 'covered_recipient_type',
             // 'teaching_hospital_id',
-            // 'teaching_hospital_name',
+            'teaching_hospital_name',
             // 'physician_profile_id',
-            // 'physician_first_name',
-            // 'physician_middle_name',
-            // 'physician_last_name',
+            'physician_first_name',
+            //'physician_middle_name',
+            'physician_last_name',
             // 'physician_name_suffix',
             // 'recipient_primary_business_street_address_line1',
             // 'recipient_primary_business_street_address_line2',
