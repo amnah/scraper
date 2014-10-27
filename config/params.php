@@ -2,5 +2,5 @@
 
 return [
     'adminEmail' => 'admin@example.com',
-    'numScrapeLimit' => 2500,
+    'numScrapeLimit' => 4000,
 ];
