@@ -1,7 +1,7 @@
 <?php
 
 // calculate environment any way you want
-if (strpos(__FILE__, '/var/www/basic') === 0) {
+if (strpos(__FILE__, '/data/sites/dev-scraper') === 0) {
     $env = 'prod';
 }
 else {

@@ -82,9 +82,10 @@ if (YII_ENV_DEV) {
     $config['modules']['gii'] = 'yii\gii\Module';
 }
 elseif (YII_ENV === 'prod') {
-    $config['components']['db']['dsn']      = 'mysql:host=localhost;dbname=yii2basic_prod';
-    $config['components']['db']['username'] = 'root';
-    $config['components']['db']['password'] = '';
+    $config['components']['db']['dsn']      = 'mysql:host=localhost;dbname=dev';
+    $config['components']['db']['username'] = 'dev';
+    $config['components']['db']['password'] = 'K8k4B9GWMcU4qvx2VqUZT96D7qYbHxQ7';
+    $config['components']['db']['tablePrefix'] = 'scr_';
 
     $config['components']['mail']['useFileTransport'] = false;
     $config['components']['mail']['transport'] = [
