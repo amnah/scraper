@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php endif; ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Import next rows (4000)'), ['/scrape/import-next'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Import next rows (5000)'), ['/scrape/import-next'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
