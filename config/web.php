@@ -87,8 +87,8 @@ elseif (YII_ENV === 'prod') {
     $config['components']['db']['password'] = 'K8k4B9GWMcU4qvx2VqUZT96D7qYbHxQ7';
     $config['components']['db']['tablePrefix'] = 'scr_';
 
-    $config['components']['mail']['useFileTransport'] = false;
-    $config['components']['mail']['transport'] = [
+    $config['components']['mailer']['useFileTransport'] = false;
+    $config['components']['mailer']['transport'] = [
         'class' => 'Swift_SmtpTransport',
         'host' => 'smtp.mailgun.org',
         'port' => '587',
