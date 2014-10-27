@@ -73,13 +73,15 @@ $config = [
     ],
 ];
 
-$config['bootstrap'][] = 'debug';
-$config['modules']['debug'] = 'yii\debug\Module';
+if (YII_ENV_DEV) {
+    // configuration adjustments for 'dev' environment
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = 'yii\debug\Module';
 
-$config['bootstrap'][] = 'gii';
-$config['modules']['gii'] = 'yii\gii\Module';
-
-if (YII_ENV === 'prod') {
+    $config['bootstrap'][] = 'gii';
+    $config['modules']['gii'] = 'yii\gii\Module';
+}
+elseif (YII_ENV === 'prod') {
     $config['components']['db']['dsn']      = 'mysql:host=localhost;dbname=dev';
     $config['components']['db']['username'] = 'dev';
     $config['components']['db']['password'] = 'K8k4B9GWMcU4qvx2VqUZT96D7qYbHxQ7';
