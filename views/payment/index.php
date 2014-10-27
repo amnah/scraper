@@ -26,7 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php endif; ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Import next rows (5000)'), ['/scrape/import-next'], ['class' => 'btn btn-success']) ?>
+        <?php $numScrapeLimit = Yii::$app->params['numScrapeLimit']; ?>
+        <?= Html::a(Yii::t('app', "Import next rows ($numScrapeLimit)"), ['/scrape/import-next'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

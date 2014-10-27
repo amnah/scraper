@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use Yii;
 use Curl\Curl;
-use app\models\Config;
 use app\libraries\Scraper;
 
 class ScrapeController extends \yii\web\Controller
@@ -48,18 +47,14 @@ class ScrapeController extends \yii\web\Controller
     public function actionImportNext()
     {
         // import next set of rows
-        $scrapeLimit = Config::get("num_scrape_limit");
-        $lastImportedId = Config::get("last_imported_id");
-        $numImported = Scraper::import($scrapeLimit, $lastImportedId);
-
-        // update last imported id
-        $command = Yii::$app->db->createCommand('SELECT MAX(id) FROM tbl_payment');
+        $scrapeLimit = Yii::$app->params['numScrapeLimit'];
+        $command = Yii::$app->db->createCommand('SELECT id FROM tbl_payment ORDER BY id DESC LIMIT 1');
         $maxId = $command->queryScalar();
-        Config::set("last_imported_id", $maxId);
+        $numImported = Scraper::import($scrapeLimit, $maxId);
 
+        // set flash and redirect
         Yii::$app->session->setFlash("Import-success", "Imported $numImported rows, up to id $maxId");
         return $this->redirect(['/payment']);
-        // https://openpaymentsdata.cms.gov/resource/hrpy-hqv8.json?$$exclude_system_fields=false&$limit=10000&$where=:updated_at>'2014-10-10'
     }
 
     public function actionAddColumns()
