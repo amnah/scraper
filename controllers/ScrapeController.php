@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use Curl\Curl;
 use app\libraries\Scraper;
+use app\models\Payment;
 
 class ScrapeController extends \yii\web\Controller
 {
@@ -48,12 +49,12 @@ class ScrapeController extends \yii\web\Controller
     {
         // import next set of rows
         $scrapeLimit = Yii::$app->params['numScrapeLimit'];
-        $command = Yii::$app->db->createCommand('SELECT max(id) FROM tbl_payment');
+        $command = Yii::$app->db->createCommand('SELECT max(id) FROM ' . Payment::tableName());
         $maxId = $command->queryScalar();
         $numImported = Scraper::import($scrapeLimit, $maxId);
 
         // set flash and redirect
-        $command = Yii::$app->db->createCommand('SELECT max(id) FROM tbl_payment');
+        $command = Yii::$app->db->createCommand('SELECT max(id) FROM ' . Payment::tableName());
         $maxId = $command->queryScalar();
         Yii::$app->session->setFlash("Import-success", "Imported $numImported rows, up to id $maxId");
         return $this->redirect(['/payment']);
