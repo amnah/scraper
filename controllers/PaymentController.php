@@ -8,6 +8,7 @@ use app\models\PaymentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
 
 /**
  * PaymentController implements the CRUD actions for Payment model.
@@ -39,6 +40,30 @@ class PaymentController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    /**
+     * Typeahead ajax search
+     * @param string $f
+     * @param string $q
+     * @return array
+     */
+    public function actionTypeaheadSearch($f, $q)
+    {
+        // do like query
+        $rows = (new \yii\db\Query())
+            ->select($f)
+            ->from(Payment::tableName())
+            ->where(['like', $f, $q])
+            ->limit(10)
+            ->all();
+
+        // build output for typeahead
+        $out = [];
+        foreach ($rows as $row) {
+            $out[] = ['value' => $row[$f]];
+        }
+        echo Json::encode($out);
     }
 
     /**

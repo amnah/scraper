@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?php $numScrapeLimit = Yii::$app->params['numScrapeLimit']; ?>
-        <?= Html::a(Yii::t('app', "Import next rows ($numScrapeLimit)"), ['/scrape/import-next'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', "Import more rows ($numScrapeLimit)"), ['/scrape/import-next'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -40,12 +40,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'condensed' => true,
         'responsive' => true,
         'hover' => true,
-        'panel' => [
-            'heading'=>'<h3 class="panel-title">Payments</h3>',
-            'showFooter' => true,
-
-        ],
-
+//        'panel' => [
+//            'heading'=>'<h3 class="panel-title">Payments</h3>',
+//            'showFooter' => true,
+//
+//        ],
+        'layout' => "{summary}\n<strong>Export data</strong>: {export}\n{items}\n{pager}",
 
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
@@ -54,14 +54,39 @@ $this->params['breadcrumbs'][] = $this->title;
             'general_transaction_id',
             //'program_year',
             //'payment_publication_date',
+            //'submitting_applicable_manufacturer_or_applicable_gpo_name'
+            // 'covered_recipient_type',
+            // 'teaching_hospital_id',
+            // 'teaching_hospital_name',
+            // 'physician_profile_id',
             [
-                'attribute' => 'submitting_applicable_manufacturer_or_applicable_gpo_name',
+                'attribute' => 'physician_first_name',
                 'class' => 'kartik\grid\DataColumn',
                 'filterType' => GridView::FILTER_TYPEAHEAD,
                 'filterWidgetOptions' => [
                     'dataset' => [
                         [
-                            'remote'=> Url::to(['payment/country-list']) . '?q=%QUERY',
+                            'remote'=> Url::to(['payment/typeahead-search']) . '?f=physician_first_name&q=%QUERY',
+                            'limit' => 10
+                        ],
+                    ],
+                    'pluginOptions' => [
+                        'minLength' => 3,
+                    ],
+                    'pluginEvents' => [
+                        "typeahead:selected" => "function() { alert('annoying'); }"
+                    ],
+                ]
+            ],
+            //'physician_middle_name',
+            [
+                'attribute' => 'physician_last_name',
+                'class' => 'kartik\grid\DataColumn',
+                'filterType' => GridView::FILTER_TYPEAHEAD,
+                'filterWidgetOptions' => [
+                    'dataset' => [
+                        [
+                            'remote'=> Url::to(['payment/typeahead-search']) . '?f=physician_last_name&q=%QUERY',
                             'limit' => 10
                         ],
                     ],
@@ -70,13 +95,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ]
             ],
-            // 'covered_recipient_type',
-            // 'teaching_hospital_id',
-            'teaching_hospital_name',
-            // 'physician_profile_id',
-            'physician_first_name',
-            //'physician_middle_name',
-            'physician_last_name',
             // 'physician_name_suffix',
             // 'recipient_primary_business_street_address_line1',
             // 'recipient_primary_business_street_address_line2',
@@ -114,7 +132,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'applicable_manufacturer_or_applicable_gpo_making_payment_state',
             // 'applicable_manufacturer_or_applicable_gpo_making_payment_country',
             // 'dispute_status_for_publication',
-            // 'total_amount_of_payment_usdollars',
+            'total_amount_of_payment_usdollars',
             // 'date_of_payment',
             // 'number_of_payments_included_in_total_amount',
             // 'form_of_payment_or_transfer_of_value',

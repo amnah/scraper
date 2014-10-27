@@ -51,6 +51,7 @@ class ScrapeController extends \yii\web\Controller
         $scrapeLimit = Yii::$app->params['numScrapeLimit'];
         $command = Yii::$app->db->createCommand('SELECT max(id) FROM ' . Payment::tableName());
         $maxId = $command->queryScalar();
+        $maxId = $maxId ? $maxId : 0;
         $numImported = Scraper::import($scrapeLimit, $maxId);
 
         // set flash and redirect
