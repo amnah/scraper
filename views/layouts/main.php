@@ -26,8 +26,8 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
             NavBar::begin([
-                'brandLabel' => 'My Company',
-                'brandUrl' => Yii::$app->homeUrl,
+                'brandLabel' => 'Payment Scraper',
+                'brandUrl' => ['/payment'],
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
                 ],
