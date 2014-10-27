@@ -48,12 +48,13 @@ class ScrapeController extends \yii\web\Controller
     {
         // import next set of rows
         $scrapeLimit = Yii::$app->params['numScrapeLimit'];
-        $command = Yii::$app->db->createCommand('SELECT id FROM tbl_payment ORDER BY id DESC LIMIT 1');
+        $command = Yii::$app->db->createCommand('SELECT max(id) FROM tbl_payment');
         $maxId = $command->queryScalar();
-        $maxId = $maxId ? $maxId : 0;
         $numImported = Scraper::import($scrapeLimit, $maxId);
 
         // set flash and redirect
+        $command = Yii::$app->db->createCommand('SELECT max(id) FROM tbl_payment');
+        $maxId = $command->queryScalar();
         Yii::$app->session->setFlash("Import-success", "Imported $numImported rows, up to id $maxId");
         return $this->redirect(['/payment']);
     }
