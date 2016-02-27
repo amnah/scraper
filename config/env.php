@@ -1,11 +1,9 @@
 <?php
 
 // calculate environment any way you want
-if (strpos(__FILE__, '/data/sites/dev-scraper') === 0) {
+$env = 'dev';
+if (strpos(__FILE__, '/var/www/scraper') === 0) {
     $env = 'prod';
-}
-else {
-    $env = 'dev';
 }
 defined('YII_ENV') or define('YII_ENV', $env);
 
